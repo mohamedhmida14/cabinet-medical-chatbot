@@ -23,7 +23,8 @@ public class CabinetMedicalApplication {
         URI uri = URI.create(databaseUrl);
         String[] userInfo = uri.getRawUserInfo() == null ? new String[] {"", ""} : uri.getRawUserInfo().split(":", 2);
         String databaseName = uri.getPath() == null ? "" : uri.getPath();
-        String jdbcUrl = "jdbc:postgresql://" + uri.getHost() + ":" + uri.getPort() + databaseName;
+        String port = uri.getPort() > 0 ? ":" + uri.getPort() : "";
+        String jdbcUrl = "jdbc:postgresql://" + uri.getHost() + port + databaseName;
 
         System.setProperty("SPRING_DATASOURCE_URL", jdbcUrl);
         if (userInfo.length > 0 && !userInfo[0].isBlank()) {
