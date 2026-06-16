@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Patient</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Espace Patient</b><div><a href="/patient/dashboard">Mes rendez-vous</a><a href="/patient/doctors">Médecins</a><a href="/patient/appointments/new">Nouveau RDV</a><a href="/patient/consultations">Consultations</a><a href="/chatbot">Chatbot</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><h1>Mes rendez-vous</h1>
+<table><tr><th>Médecin</th><th>Spécialité</th><th>Date</th><th>Motif</th><th>Statut</th><th>Action</th></tr>
+<tr th:each="a:${appointments}"><td th:text="${a.doctor.user.name}"></td><td th:text="${a.doctor.specialty}"></td><td th:text="${#temporals.format(a.dateTime,'yyyy-MM-dd HH:mm')}"></td><td th:text="${a.reason}"></td><td th:text="${a.status}"></td><td><form th:if="${a.status.name() != 'CANCELLED' && a.status.name() != 'COMPLETED'}" th:action="@{/patient/appointments/{id}/cancel(id=${a.id})}" method="post"><button class="btn-danger">Annuler</button></form></td></tr>
+</table></div></body></html>

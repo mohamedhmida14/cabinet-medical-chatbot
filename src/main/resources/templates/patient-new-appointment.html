@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Nouveau RDV</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Espace Patient</b><div><a href="/patient/dashboard">Mes rendez-vous</a><a href="/patient/doctors">Médecins</a><a href="/patient/consultations">Consultations</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><div class="card"><h1>Prendre un rendez-vous</h1><form method="post" action="/patient/appointments">
+<select name="doctorId" required><option value="">Choisir un médecin</option><option th:each="d:${doctors}" th:value="${d.id}" th:text="${d.user.name + ' - ' + d.specialty}"></option></select>
+<input type="datetime-local" name="dateTime" required><textarea name="reason" placeholder="Motif du rendez-vous" required></textarea><button>Confirmer</button></form></div></div>
+</body></html>

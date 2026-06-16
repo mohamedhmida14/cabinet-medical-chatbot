@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Chatbot</title><link rel="stylesheet" href="/css/style.css"><script src="/js/chatbot.js"></script></head><body>
+<div class="navbar"><b>Assistant intelligent</b><div><a href="/login">Connexion</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><div class="card"><h1>Chatbot du cabinet médical</h1><p class="small">Posez une question : horaires, rendez-vous, annulation, médecins disponibles, dossier médical...</p>
+<div id="chat" class="chat-window"><div class="message bot-message">Bonjour, je suis l'assistant du cabinet. Comment puis-je vous aider ?</div></div>
+<div style="display:flex;gap:10px;margin-top:12px;"><input id="question" placeholder="Votre question" onkeydown="if(event.key==='Enter') sendQuestion()"><button onclick="sendQuestion()">Envoyer</button></div>
+</div></div></body></html>

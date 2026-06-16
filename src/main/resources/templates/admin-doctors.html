@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Médecins</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Admin</b><div><a href="/admin/dashboard">Dashboard</a><a href="/admin/patients">Patients</a><a href="/admin/appointments">Rendez-vous</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><h1>Gestion des médecins</h1>
+<div class="card"><h2>Ajouter un médecin</h2><form method="post" action="/admin/doctors">
+<input name="name" placeholder="Nom" required><input type="email" name="email" placeholder="Email" required><input name="password" placeholder="Mot de passe" required>
+<input name="specialty" placeholder="Spécialité" required><input name="phone" placeholder="Téléphone" required><input name="availability" placeholder="Disponibilité" required><button>Ajouter</button></form></div>
+<table><tr><th>Nom</th><th>Email</th><th>Spécialité</th><th>Téléphone</th><th>Disponibilité</th></tr>
+<tr th:each="d:${doctors}"><td th:text="${d.user.name}"></td><td th:text="${d.user.email}"></td><td th:text="${d.specialty}"></td><td th:text="${d.phone}"></td><td th:text="${d.availability}"></td></tr></table>
+</div></body></html>

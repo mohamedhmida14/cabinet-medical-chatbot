@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Cabinet Médical</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="login-box card">
+    <h1>Cabinet Médical</h1>
+    <p class="small">Application de gestion avec chatbot intelligent</p>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <form method="post" action="/login">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <button type="submit">Se connecter</button>
+    </form>
+    <hr>
+    <p class="small"><b>Comptes de test :</b></p>
+    <p class="small">Admin: admin@cabinet.tn / admin</p>
+    <p class="small">Médecin: doctor@cabinet.tn / doctor</p>
+    <p class="small">Patient: patient@cabinet.tn / patient</p>
+    <a href="/chatbot">Essayer le chatbot</a>
+</div>
+</body>
+</html>

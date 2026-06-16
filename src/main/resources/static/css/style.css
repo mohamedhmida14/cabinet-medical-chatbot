@@ -1,0 +1,24 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #1f2937; }
+a { color: #2563eb; text-decoration: none; }
+.navbar { background: #0f172a; color: white; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+.navbar a { color: white; margin-left: 16px; }
+.container { max-width: 1100px; margin: 28px auto; padding: 0 18px; }
+.card { background: white; padding: 22px; border-radius: 14px; box-shadow: 0 6px 18px rgba(15,23,42,.08); margin-bottom: 18px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+.stat { font-size: 36px; font-weight: bold; color: #2563eb; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
+th, td { padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+th { background: #eff6ff; }
+form { display: grid; gap: 12px; }
+input, select, textarea { width: 100%; padding: 11px; border: 1px solid #cbd5e1; border-radius: 8px; }
+button, .btn { background: #2563eb; color: white; border: 0; padding: 10px 14px; border-radius: 8px; cursor: pointer; display: inline-block; }
+.btn-danger { background: #dc2626; }
+.btn-success { background: #16a34a; }
+.error { background: #fee2e2; color: #991b1b; padding: 10px; border-radius: 8px; }
+.login-box { max-width: 430px; margin: 70px auto; }
+.small { color: #64748b; font-size: 14px; }
+.chat-window { height: 380px; overflow-y: auto; background: #f8fafc; padding: 16px; border-radius: 10px; border: 1px solid #e5e7eb; }
+.message { padding: 10px 14px; border-radius: 12px; margin: 8px 0; max-width: 80%; }
+.user-message { background: #dbeafe; margin-left: auto; }
+.bot-message { background: #e5e7eb; }

@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Médecin</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Espace Médecin</b><div><a href="/doctor/dashboard">Rendez-vous</a><a href="/chatbot">Chatbot</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><h1>Mes rendez-vous</h1>
+<table><tr><th>Patient</th><th>Date</th><th>Motif</th><th>Statut</th><th>Action</th></tr>
+<tr th:each="a:${appointments}"><td th:text="${a.patient.user.name}"></td><td th:text="${#temporals.format(a.dateTime,'yyyy-MM-dd HH:mm')}"></td><td th:text="${a.reason}"></td><td th:text="${a.status}"></td><td><a class="btn btn-success" th:if="${a.status.name() != 'COMPLETED'}" th:href="@{/doctor/consultation/new/{id}(id=${a.id})}">Ajouter consultation</a></td></tr>
+</table></div></body></html>

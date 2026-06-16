@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Consultations</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Espace Patient</b><div><a href="/patient/dashboard">Mes rendez-vous</a><a href="/patient/doctors">Médecins</a><a href="/patient/appointments/new">Nouveau RDV</a><a href="/chatbot">Chatbot</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><h1>Historique des consultations</h1>
+<table><tr><th>Date</th><th>Médecin</th><th>Diagnostic</th><th>Traitement</th><th>Notes</th></tr>
+<tr th:each="c:${consultations}"><td th:text="${#temporals.format(c.createdAt,'yyyy-MM-dd HH:mm')}"></td><td th:text="${c.appointment.doctor.user.name}"></td><td th:text="${c.diagnosis}"></td><td th:text="${c.treatment}"></td><td th:text="${c.notes}"></td></tr>
+</table></div></body></html>

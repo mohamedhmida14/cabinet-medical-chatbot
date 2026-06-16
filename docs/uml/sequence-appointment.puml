@@ -1,0 +1,17 @@
+@startuml
+actor Patient
+participant "Interface Web" as UI
+participant "PatientController" as Controller
+participant "AppointmentService" as Service
+database "PostgreSQL" as DB
+Patient -> UI : Remplit formulaire RDV
+UI -> Controller : POST /patient/appointments
+Controller -> Service : createAppointment(patientId, doctorId, dateTime, reason)
+Service -> DB : Charger Patient et Doctor
+DB --> Service : Donnees trouvees
+Service -> DB : Enregistrer Appointment
+DB --> Service : RDV cree
+Service --> Controller : Appointment
+Controller --> UI : Redirection dashboard
+UI --> Patient : Confirmation visuelle
+@enduml

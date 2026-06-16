@@ -1,0 +1,14 @@
+@startuml
+start
+:Patient se connecte;
+:Consulte la liste des médecins;
+:Choisit un médecin;
+:Saisit date, heure et motif;
+if (Données valides ?) then (oui)
+  :Créer rendez-vous avec statut PENDING;
+  :Afficher confirmation;
+else (non)
+  :Afficher message d'erreur;
+endif
+stop
+@enduml

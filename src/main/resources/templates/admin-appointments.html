@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Rendez-vous</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Admin</b><div><a href="/admin/dashboard">Dashboard</a><a href="/admin/doctors">Médecins</a><a href="/admin/patients">Patients</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><h1>Gestion des rendez-vous</h1>
+<table><tr><th>Patient</th><th>Médecin</th><th>Date</th><th>Motif</th><th>Statut</th><th>Action</th></tr>
+<tr th:each="a:${appointments}"><td th:text="${a.patient.user.name}"></td><td th:text="${a.doctor.user.name}"></td><td th:text="${#temporals.format(a.dateTime,'yyyy-MM-dd HH:mm')}"></td><td th:text="${a.reason}"></td><td th:text="${a.status}"></td><td><form th:action="@{/admin/appointments/{id}/status(id=${a.id})}" method="post"><select name="status"><option th:each="s:${statuses}" th:value="${s}" th:text="${s}" th:selected="${s == a.status}"></option></select><button>Modifier</button></form></td></tr>
+</table></div></body></html>

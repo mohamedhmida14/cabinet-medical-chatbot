@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+actor Administrateur
+actor Patient
+actor Medecin
+actor Chatbot
+rectangle "Application Cabinet Medical" {
+  usecase "Se connecter" as UC1
+  usecase "Gerer medecins" as UC2
+  usecase "Gerer patients" as UC3
+  usecase "Gerer rendez-vous" as UC4
+  usecase "Consulter medecins" as UC5
+  usecase "Prendre rendez-vous" as UC6
+  usecase "Annuler rendez-vous" as UC7
+  usecase "Consulter historique" as UC8
+  usecase "Voir rendez-vous" as UC9
+  usecase "Ajouter consultation" as UC10
+  usecase "Assister utilisateur" as UC11
+}
+Administrateur --> UC1
+Administrateur --> UC2
+Administrateur --> UC3
+Administrateur --> UC4
+Patient --> UC1
+Patient --> UC5
+Patient --> UC6
+Patient --> UC7
+Patient --> UC8
+Medecin --> UC1
+Medecin --> UC9
+Medecin --> UC10
+Chatbot --> UC11
+Patient --> UC11
+@enduml

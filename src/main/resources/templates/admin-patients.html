@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Patients</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Admin</b><div><a href="/admin/dashboard">Dashboard</a><a href="/admin/doctors">Médecins</a><a href="/admin/appointments">Rendez-vous</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><h1>Gestion des patients</h1>
+<div class="card"><h2>Ajouter un patient</h2><form method="post" action="/admin/patients">
+<input name="name" placeholder="Nom" required><input type="email" name="email" placeholder="Email" required><input name="password" placeholder="Mot de passe" required>
+<input name="phone" placeholder="Téléphone" required><input type="date" name="dateOfBirth" required><input name="address" placeholder="Adresse" required><button>Ajouter</button></form></div>
+<table><tr><th>Nom</th><th>Email</th><th>Téléphone</th><th>Date naissance</th><th>Adresse</th></tr>
+<tr th:each="p:${patients}"><td th:text="${p.user.name}"></td><td th:text="${p.user.email}"></td><td th:text="${p.phone}"></td><td th:text="${p.dateOfBirth}"></td><td th:text="${p.address}"></td></tr></table>
+</div></body></html>

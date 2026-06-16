@@ -1,0 +1,7 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Consultation</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Espace Médecin</b><div><a href="/doctor/dashboard">Rendez-vous</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><div class="card"><h1>Ajouter une consultation</h1>
+<p>Patient : <b th:text="${appointment.patient.user.name}"></b></p>
+<form method="post" action="/doctor/consultation"><input type="hidden" name="appointmentId" th:value="${appointment.id}">
+<textarea name="diagnosis" placeholder="Diagnostic" required></textarea><textarea name="treatment" placeholder="Traitement" required></textarea><textarea name="notes" placeholder="Notes" required></textarea><button>Enregistrer</button></form>
+</div></div></body></html>

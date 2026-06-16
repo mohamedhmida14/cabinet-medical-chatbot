@@ -1,0 +1,14 @@
+.git
+.github
+.idea
+.vscode
+.venv
+venv
+target
+__pycache__
+*.pyc
+.env
+*.env
+!*.env.example
+python_chatbot/.env
+*.log

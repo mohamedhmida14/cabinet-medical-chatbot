@@ -1,0 +1,1 @@
+This project uses simple repeated nav markup instead of Thymeleaf fragments to keep it easy for students to understand and edit.

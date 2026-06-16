@@ -1,0 +1,46 @@
+@startuml
+class User {
+  Long id
+  String name
+  String email
+  String password
+  Role role
+}
+class Patient {
+  Long id
+  String phone
+  LocalDate dateOfBirth
+  String address
+}
+class Doctor {
+  Long id
+  String specialty
+  String phone
+  String availability
+}
+class Appointment {
+  Long id
+  LocalDateTime dateTime
+  String reason
+  AppointmentStatus status
+}
+class Consultation {
+  Long id
+  String diagnosis
+  String treatment
+  String notes
+  LocalDateTime createdAt
+}
+class ChatbotQuestion {
+  Long id
+  String question
+  String answer
+}
+enum Role { ADMIN; PATIENT; DOCTOR }
+enum AppointmentStatus { PENDING; CONFIRMED; CANCELLED; COMPLETED }
+User "1" -- "0..1" Patient
+User "1" -- "0..1" Doctor
+Patient "1" -- "0..*" Appointment
+Doctor "1" -- "0..*" Appointment
+Appointment "1" -- "0..1" Consultation
+@enduml

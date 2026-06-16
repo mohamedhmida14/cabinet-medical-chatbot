@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: cabinet-medical-app
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: postgres
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cabinet-medical-db
+          property: connectionString
+      - key: CHATBOT_PYTHON_HOSTPORT
+        fromService:
+          type: web
+          name: cabinet-medical-chatbot-api
+          property: hostport
+
+  - type: web
+    name: cabinet-medical-chatbot-api
+    runtime: python
+    plan: free
+    rootDir: python_chatbot
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cabinet-medical-db
+          property: connectionString
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash
+
+databases:
+  - name: cabinet-medical-db
+    databaseName: cabinet_medical_db
+    user: cabinet_medical_user
+    plan: free

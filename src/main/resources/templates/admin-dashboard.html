@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Admin</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div class="navbar"><b>Cabinet Médical - Admin</b><div><a href="/admin/dashboard">Dashboard</a><a href="/admin/doctors">Médecins</a><a href="/admin/patients">Patients</a><a href="/admin/appointments">Rendez-vous</a><a href="/chatbot">Chatbot</a><a href="/logout">Déconnexion</a></div></div>
+<div class="container"><h1>Tableau de bord administrateur</h1><div class="grid">
+<div class="card"><p>Médecins</p><div class="stat" th:text="${doctorsCount}">0</div></div>
+<div class="card"><p>Patients</p><div class="stat" th:text="${patientsCount}">0</div></div>
+<div class="card"><p>Rendez-vous</p><div class="stat" th:text="${appointmentsCount}">0</div></div>
+<div class="card"><p>Consultations</p><div class="stat" th:text="${consultationsCount}">0</div></div>
+</div></div></body></html>
