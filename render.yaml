@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: cabinet-medical-app
+    name: mohamed-cabinet-medical-web
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
@@ -14,11 +14,11 @@ services:
       - key: CHATBOT_PYTHON_HOSTPORT
         fromService:
           type: web
-          name: cabinet-medical-chatbot-api
+          name: mohamed-cabinet-medical-chatbot-api
           property: hostport
 
   - type: web
-    name: cabinet-medical-chatbot-api
+    name: mohamed-cabinet-medical-chatbot-api
     runtime: python
     plan: free
     rootDir: python_chatbot
