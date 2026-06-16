@@ -11,11 +11,8 @@ services:
         fromDatabase:
           name: cabinet-medical-db
           property: connectionString
-      - key: CHATBOT_PYTHON_HOSTPORT
-        fromService:
-          type: web
-          name: mohamed-cabinet-medical-chatbot-api
-          property: hostport
+      - key: CHATBOT_PYTHON_URL
+        value: https://mohamed-cabinet-medical-chatbot-api.onrender.com/ask
 
   - type: web
     name: mohamed-cabinet-medical-chatbot-api
