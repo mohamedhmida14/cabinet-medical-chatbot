@@ -214,5 +214,5 @@ def ask(chat: ChatRequest) -> dict[str, str]:
 
     try:
         return {"answer": call_gemini(build_prompt(chat, context)), "source": "gemini"}
-    except Exception:
-        return {"answer": local_answer(chat, context), "source": "local-fallback"}
+    except Exception as exc:
+        return {"answer": local_answer(chat, context), "source": f"gemini-error: {exc.__class__.__name__}"}
