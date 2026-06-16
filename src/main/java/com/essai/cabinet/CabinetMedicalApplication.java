@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @SpringBootApplication
 public class CabinetMedicalApplication {
@@ -19,16 +21,20 @@ public class CabinetMedicalApplication {
         }
 
         URI uri = URI.create(databaseUrl);
-        String[] userInfo = uri.getUserInfo() == null ? new String[] {"", ""} : uri.getUserInfo().split(":", 2);
+        String[] userInfo = uri.getRawUserInfo() == null ? new String[] {"", ""} : uri.getRawUserInfo().split(":", 2);
         String databaseName = uri.getPath() == null ? "" : uri.getPath();
         String jdbcUrl = "jdbc:postgresql://" + uri.getHost() + ":" + uri.getPort() + databaseName;
 
         System.setProperty("SPRING_DATASOURCE_URL", jdbcUrl);
         if (userInfo.length > 0 && !userInfo[0].isBlank()) {
-            System.setProperty("SPRING_DATASOURCE_USERNAME", userInfo[0]);
+            System.setProperty("SPRING_DATASOURCE_USERNAME", decodeUrlPart(userInfo[0]));
         }
         if (userInfo.length > 1 && !userInfo[1].isBlank()) {
-            System.setProperty("SPRING_DATASOURCE_PASSWORD", userInfo[1]);
+            System.setProperty("SPRING_DATASOURCE_PASSWORD", decodeUrlPart(userInfo[1]));
         }
+    }
+
+    private static String decodeUrlPart(String value) {
+        return URLDecoder.decode(value, StandardCharsets.UTF_8);
     }
 }
