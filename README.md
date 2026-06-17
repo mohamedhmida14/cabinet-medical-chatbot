@@ -12,7 +12,7 @@ Application web Spring Boot pour la gestion d'un cabinet medical avec chatbot in
 - Espace patient : consulter medecins, prendre/annuler RDV, voir consultations
 - Espace medecin : consulter RDV, ajouter consultation
 - Chatbot intelligent simple base sur des questions/reponses
-- Chatbot Python optionnel avec API Gemini et acces PostgreSQL
+- Chatbot Python optionnel avec OpenRouter/Gemini et acces PostgreSQL
 - Base de donnees compatible PostgreSQL
 - Mode H2 inclus pour tester sans installation de base de donnees
 
@@ -64,9 +64,9 @@ mvn clean package
 java -jar target/cabinet-medical-chatbot-1.0.0.jar --spring.profiles.active=postgres
 ```
 
-## Lancer le chatbot Python avec API Gemini
+## Lancer le chatbot Python avec API OpenRouter ou Gemini
 
-Le projet utilise Google Gemini API comme option gratuite pour le chatbot intelligent. Creez une cle API dans Google AI Studio, puis preparez le fichier `.env` :
+Le projet utilise OpenRouter par defaut pour le chatbot intelligent. Creez une cle API sur OpenRouter, puis preparez le fichier `.env`. Gemini reste disponible en mettant `AI_PROVIDER=gemini`.
 
 ```bash
 python3 -m venv .venv
@@ -80,6 +80,9 @@ Mettez votre cle dans `python_chatbot/.env` :
 
 ```text
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/cabinet_medical_db
+AI_PROVIDER=openrouter
+OPENROUTER_API_KEY=votre_cle_openrouter
+OPENROUTER_MODEL=openrouter/free
 GEMINI_API_KEY=votre_cle_api
 GEMINI_MODEL=gemini-3.5-flash
 ```
@@ -111,7 +114,7 @@ Etapes :
 
 1. Pousser le projet sur GitHub.
 2. Dans Render, creer un nouveau Blueprint et choisir ce depot GitHub.
-3. Renseigner la variable secrete `GEMINI_API_KEY` lorsque Render la demande.
+3. Renseigner la variable secrete `OPENROUTER_API_KEY` lorsque Render la demande.
 4. Lancer le deploiement.
 
 Render injecte automatiquement :
@@ -130,7 +133,7 @@ model        : entites JPA
 repository   : interfaces Spring Data JPA
 service      : logique metier
 config       : donnees initiales
-python_chatbot : chatbot Python FastAPI connecte a PostgreSQL et Gemini
+python_chatbot : chatbot Python FastAPI connecte a PostgreSQL et OpenRouter/Gemini
 resources/templates : pages Thymeleaf
 resources/static    : CSS et JavaScript
 ```

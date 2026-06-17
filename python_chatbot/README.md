@@ -3,12 +3,13 @@
 FastAPI service used by the Spring Boot app to answer chatbot questions with:
 
 - PostgreSQL data from the cabinet database
-- Gemini API text generation
-- A local fallback if `GEMINI_API_KEY` is missing or the API is unavailable
+- OpenRouter or Gemini API text generation
+- A local fallback if the AI API key is missing or the API is unavailable
 
-## Free API choice
+## API choice
 
-Use Google Gemini API. Create a free API key in Google AI Studio, then put it in `python_chatbot/.env`.
+Use OpenRouter by default. Create an API key on OpenRouter, then put it in `python_chatbot/.env`.
+Gemini is still supported by changing `AI_PROVIDER=gemini`.
 
 ## Run
 
@@ -26,6 +27,9 @@ Edit `python_chatbot/.env`:
 
 ```text
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/cabinet_medical_db
+AI_PROVIDER=openrouter
+OPENROUTER_API_KEY=your_openrouter_key_here
+OPENROUTER_MODEL=openrouter/free
 GEMINI_API_KEY=your_key_here
 GEMINI_MODEL=gemini-3.5-flash
 ```

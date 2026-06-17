@@ -121,6 +121,22 @@ CONTEXTE:
 """.strip()
 
 
+def post_json(url: str, payload: dict[str, Any], headers: dict[str, str]) -> dict[str, Any]:
+    api_request = request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers=headers,
+        method="POST",
+    )
+
+    try:
+        with request.urlopen(api_request, timeout=25) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except error.HTTPError as exc:
+        details = exc.read().decode("utf-8", errors="ignore")
+        raise RuntimeError(f"API error {exc.code}: {details}") from exc
+
+
 def call_gemini(prompt: str) -> str:
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
@@ -135,28 +151,68 @@ def call_gemini(prompt: str) -> str:
             "maxOutputTokens": 500,
         },
     }
-    api_request = request.Request(
+    data = post_json(
         url,
-        data=json.dumps(payload).encode("utf-8"),
+        payload,
         headers={
             "Content-Type": "application/json",
             "x-goog-api-key": api_key,
         },
-        method="POST",
     )
-
-    try:
-        with request.urlopen(api_request, timeout=25) as response:
-            data = json.loads(response.read().decode("utf-8"))
-    except error.HTTPError as exc:
-        details = exc.read().decode("utf-8", errors="ignore")
-        raise RuntimeError(f"Gemini API error {exc.code}: {details}") from exc
 
     parts = data["candidates"][0]["content"].get("parts", [])
     answer = "".join(part.get("text", "") for part in parts).strip()
     if not answer:
         raise RuntimeError("Gemini response did not contain text")
     return answer
+
+
+def call_openrouter(prompt: str) -> str:
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENROUTER_API_KEY is not configured")
+
+    model = os.getenv("OPENROUTER_MODEL", "openrouter/free")
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.2,
+        "max_tokens": 500,
+    }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": os.getenv("APP_URL", "https://mohamed-cabinet-medical-web.onrender.com"),
+        "X-Title": os.getenv("APP_NAME", "Cabinet Medical Chatbot"),
+    }
+    data = post_json("https://openrouter.ai/api/v1/chat/completions", payload, headers)
+
+    choices = data.get("choices", [])
+    if not choices:
+        raise RuntimeError("OpenRouter response did not contain choices")
+
+    answer = choices[0].get("message", {}).get("content", "").strip()
+    if not answer:
+        raise RuntimeError("OpenRouter response did not contain text")
+    return answer
+
+
+def configured_ai_provider() -> str:
+    provider = os.getenv("AI_PROVIDER", "").strip().lower()
+    if provider:
+        return provider
+    if os.getenv("OPENROUTER_API_KEY"):
+        return "openrouter"
+    return "gemini"
+
+
+def call_ai(prompt: str) -> tuple[str, str]:
+    provider = configured_ai_provider()
+    if provider == "openrouter":
+        return call_openrouter(prompt), "openrouter"
+    if provider == "gemini":
+        return call_gemini(prompt), "gemini"
+    raise RuntimeError(f"Unsupported AI_PROVIDER: {provider}")
 
 
 def local_answer(chat: ChatRequest, context: dict[str, Any]) -> str:
@@ -220,6 +276,7 @@ def ask(chat: ChatRequest) -> dict[str, str]:
         }
 
     try:
-        return {"answer": call_gemini(build_prompt(chat, context)), "source": "gemini"}
+        answer, source = call_ai(build_prompt(chat, context))
+        return {"answer": answer, "source": source}
     except Exception as exc:
-        return {"answer": local_answer(chat, context), "source": safe_error_source("gemini-error", exc)}
+        return {"answer": local_answer(chat, context), "source": safe_error_source("ai-error", exc)}

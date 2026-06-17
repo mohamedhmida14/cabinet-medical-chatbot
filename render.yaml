@@ -28,6 +28,12 @@ services:
         fromDatabase:
           name: cabinet-medical-db
           property: connectionString
+      - key: AI_PROVIDER
+        value: openrouter
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: openrouter/free
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_MODEL
