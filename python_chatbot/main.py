@@ -197,6 +197,13 @@ def local_answer(chat: ChatRequest, context: dict[str, Any]) -> str:
     return "Je peux vous aider pour les medecins, les disponibilites, les patients et les rendez-vous du cabinet."
 
 
+def safe_error_source(prefix: str, exc: Exception) -> str:
+    message = str(exc).replace("\n", " ").strip()
+    if len(message) > 220:
+        message = message[:217] + "..."
+    return f"{prefix}: {exc.__class__.__name__}: {message}"
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
@@ -209,10 +216,10 @@ def ask(chat: ChatRequest) -> dict[str, str]:
     except Exception as exc:
         return {
             "answer": "Je n'arrive pas a lire la base de donnees PostgreSQL pour le moment. Verifiez que PostgreSQL est demarre.",
-            "source": f"database-error: {exc.__class__.__name__}",
+            "source": safe_error_source("database-error", exc),
         }
 
     try:
         return {"answer": call_gemini(build_prompt(chat, context)), "source": "gemini"}
     except Exception as exc:
-        return {"answer": local_answer(chat, context), "source": f"gemini-error: {exc.__class__.__name__}"}
+        return {"answer": local_answer(chat, context), "source": safe_error_source("gemini-error", exc)}
